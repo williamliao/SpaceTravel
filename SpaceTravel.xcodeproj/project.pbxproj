@@ -14,6 +14,22 @@
 		C8D183ED25E6167300F2C258 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8D183EB25E6167300F2C258 /* LaunchScreen.storyboard */; };
 		C8D183F825E6167300F2C258 /* SpaceTravelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D183F725E6167300F2C258 /* SpaceTravelTests.swift */; };
 		C8D1840325E6167300F2C258 /* SpaceTravelUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1840225E6167300F2C258 /* SpaceTravelUITests.swift */; };
+		C8D1841F25E617A800F2C258 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1841D25E617A800F2C258 /* AppCoordinator.swift */; };
+		C8D1842025E617A800F2C258 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1841E25E617A800F2C258 /* Coordinator.swift */; };
+		C8D1842525E6180000F2C258 /* SpaceListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1842425E6180000F2C258 /* SpaceListCoordinator.swift */; };
+		C8D1842E25E61AE000F2C258 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1842A25E61AE000F2C258 /* Observable.swift */; };
+		C8D1842F25E61AE000F2C258 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1842B25E61AE000F2C258 /* ImageCache.swift */; };
+		C8D1843125E61AE000F2C258 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1842D25E61AE000F2C258 /* ImageLoader.swift */; };
+		C8D1843A25E61B2700F2C258 /* APIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1843925E61B2700F2C258 /* APIResult.swift */; };
+		C8D1843F25E61B8000F2C258 /* ServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1843E25E61B8000F2C258 /* ServiceHelper.swift */; };
+		C8D1844525E61C3B00F2C258 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1844425E61C3B00F2C258 /* Response.swift */; };
+		C8D1844F25E61DF300F2C258 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1844E25E61DF300F2C258 /* MainViewController.swift */; };
+		C8D1845725E61E0000F2C258 /* PhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1845625E61E0000F2C258 /* PhotoListViewController.swift */; };
+		C8D1845C25E61E0B00F2C258 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1845B25E61E0B00F2C258 /* PhotoDetailViewController.swift */; };
+		C8D1846125E61E7600F2C258 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1846025E61E7600F2C258 /* MainViewModel.swift */; };
+		C8D1846625E61E8200F2C258 /* PhotoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1846525E61E8200F2C258 /* PhotoListViewModel.swift */; };
+		C8D1846B25E61E8F00F2C258 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1846A25E61E8F00F2C258 /* DetailViewModel.swift */; };
+		C8D1847025E61FBD00F2C258 /* nasa.json in Resources */ = {isa = PBXBuildFile; fileRef = C8D1846F25E61FBD00F2C258 /* nasa.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +63,22 @@
 		C8D183FE25E6167300F2C258 /* SpaceTravelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaceTravelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8D1840225E6167300F2C258 /* SpaceTravelUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceTravelUITests.swift; sourceTree = "<group>"; };
 		C8D1840425E6167300F2C258 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C8D1841D25E617A800F2C258 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		C8D1841E25E617A800F2C258 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		C8D1842425E6180000F2C258 /* SpaceListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceListCoordinator.swift; sourceTree = "<group>"; };
+		C8D1842A25E61AE000F2C258 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		C8D1842B25E61AE000F2C258 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		C8D1842D25E61AE000F2C258 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		C8D1843925E61B2700F2C258 /* APIResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResult.swift; sourceTree = "<group>"; };
+		C8D1843E25E61B8000F2C258 /* ServiceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
+		C8D1844425E61C3B00F2C258 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		C8D1844E25E61DF300F2C258 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		C8D1845625E61E0000F2C258 /* PhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewController.swift; sourceTree = "<group>"; };
+		C8D1845B25E61E0B00F2C258 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
+		C8D1846025E61E7600F2C258 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		C8D1846525E61E8200F2C258 /* PhotoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewModel.swift; sourceTree = "<group>"; };
+		C8D1846A25E61E8F00F2C258 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		C8D1846F25E61FBD00F2C258 /* nasa.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = nasa.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,10 +129,17 @@
 		C8D183DF25E6166F00F2C258 /* SpaceTravel */ = {
 			isa = PBXGroup;
 			children = (
+				C8D1844D25E61DE000F2C258 /* ViewController */,
+				C8D1844C25E61DD400F2C258 /* ViewModel */,
+				C8D1844325E61C2A00F2C258 /* Model */,
+				C8D1843825E61B1900F2C258 /* Service */,
+				C8D1842925E61AD100F2C258 /* Share */,
+				C8D1841C25E6179300F2C258 /* Coordinator */,
 				C8D183E025E6166F00F2C258 /* AppDelegate.swift */,
 				C8D183E225E6166F00F2C258 /* SceneDelegate.swift */,
 				C8D183E425E6166F00F2C258 /* ViewController.swift */,
 				C8D183E925E6167300F2C258 /* Assets.xcassets */,
+				C8D1846F25E61FBD00F2C258 /* nasa.json */,
 				C8D183EB25E6167300F2C258 /* LaunchScreen.storyboard */,
 				C8D183EE25E6167300F2C258 /* Info.plist */,
 			);
@@ -123,6 +162,63 @@
 				C8D1840425E6167300F2C258 /* Info.plist */,
 			);
 			path = SpaceTravelUITests;
+			sourceTree = "<group>";
+		};
+		C8D1841C25E6179300F2C258 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				C8D1841D25E617A800F2C258 /* AppCoordinator.swift */,
+				C8D1841E25E617A800F2C258 /* Coordinator.swift */,
+				C8D1842425E6180000F2C258 /* SpaceListCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		C8D1842925E61AD100F2C258 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				C8D1842B25E61AE000F2C258 /* ImageCache.swift */,
+				C8D1842D25E61AE000F2C258 /* ImageLoader.swift */,
+				C8D1842A25E61AE000F2C258 /* Observable.swift */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
+		C8D1843825E61B1900F2C258 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				C8D1843925E61B2700F2C258 /* APIResult.swift */,
+				C8D1843E25E61B8000F2C258 /* ServiceHelper.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		C8D1844325E61C2A00F2C258 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C8D1844425E61C3B00F2C258 /* Response.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C8D1844C25E61DD400F2C258 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C8D1846025E61E7600F2C258 /* MainViewModel.swift */,
+				C8D1846525E61E8200F2C258 /* PhotoListViewModel.swift */,
+				C8D1846A25E61E8F00F2C258 /* DetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C8D1844D25E61DE000F2C258 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C8D1844E25E61DF300F2C258 /* MainViewController.swift */,
+				C8D1845625E61E0000F2C258 /* PhotoListViewController.swift */,
+				C8D1845B25E61E0B00F2C258 /* PhotoDetailViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,6 +324,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8D1847025E61FBD00F2C258 /* nasa.json in Resources */,
 				C8D183ED25E6167300F2C258 /* LaunchScreen.storyboard in Resources */,
 				C8D183EA25E6167300F2C258 /* Assets.xcassets in Resources */,
 			);
@@ -254,9 +351,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8D1841F25E617A800F2C258 /* AppCoordinator.swift in Sources */,
+				C8D1844F25E61DF300F2C258 /* MainViewController.swift in Sources */,
+				C8D1843A25E61B2700F2C258 /* APIResult.swift in Sources */,
+				C8D1845C25E61E0B00F2C258 /* PhotoDetailViewController.swift in Sources */,
 				C8D183E525E6166F00F2C258 /* ViewController.swift in Sources */,
+				C8D1843125E61AE000F2C258 /* ImageLoader.swift in Sources */,
+				C8D1844525E61C3B00F2C258 /* Response.swift in Sources */,
+				C8D1842F25E61AE000F2C258 /* ImageCache.swift in Sources */,
+				C8D1842025E617A800F2C258 /* Coordinator.swift in Sources */,
+				C8D1842E25E61AE000F2C258 /* Observable.swift in Sources */,
+				C8D1846625E61E8200F2C258 /* PhotoListViewModel.swift in Sources */,
 				C8D183E125E6166F00F2C258 /* AppDelegate.swift in Sources */,
 				C8D183E325E6166F00F2C258 /* SceneDelegate.swift in Sources */,
+				C8D1846B25E61E8F00F2C258 /* DetailViewModel.swift in Sources */,
+				C8D1845725E61E0000F2C258 /* PhotoListViewController.swift in Sources */,
+				C8D1842525E6180000F2C258 /* SpaceListCoordinator.swift in Sources */,
+				C8D1843F25E61B8000F2C258 /* ServiceHelper.swift in Sources */,
+				C8D1846125E61E7600F2C258 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
