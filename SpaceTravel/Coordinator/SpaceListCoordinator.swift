@@ -43,22 +43,23 @@ class SpaceListCoordinator: Coordinator {
     func createMainView() -> UIViewController {
         let main = MainViewController()
         main.title = "Main"
-        main.coordinator = self
         main.viewModel = mainViewModel
+        main.viewModel.coordinator = self
         return main
     }
     
-    func createPhotoListView() -> UIViewController {
+    func createPhotoListView(respone: [Response]) -> UIViewController {
         let photo = PhotoListViewController()
-        photo.title = "Main"
+        photo.title = "Photo"
         photo.coordinator = self
+        photoListViewModel.respone.value = respone
         photo.viewModel = photoListViewModel
         return photo
     }
     
     func createDetailView() -> UIViewController {
         let detail = PhotoDetailViewController()
-        detail.title = "Main"
+        detail.title = "Detail"
         detail.coordinator = self
         detail.viewModel = photoDetailViewModel
         return detail
@@ -68,22 +69,16 @@ class SpaceListCoordinator: Coordinator {
 
 extension SpaceListCoordinator {
     
-    func goToPhotoView() {
+    func goToPhotoView(respone: [Response]) {
         
-        let photoListVC = createPhotoListView()
+        let photoListVC = createPhotoListView(respone: respone)
         
-        if let currentNavController = self.rootViewController.viewControllers.first as? UINavigationController {
-            
-            currentNavController.pushViewController(photoListVC, animated: true)
-        }
+        rootViewController.pushViewController(photoListVC, animated: true)
     }
     
     func goToDetailView() {
         let topDetailVC = createDetailView()
         
-        if let currentNavController = self.rootViewController.viewControllers.first as? UINavigationController {
-            
-            currentNavController.pushViewController(topDetailVC, animated: true)
-        }
+        rootViewController.pushViewController(topDetailVC, animated: true)
     }
 }

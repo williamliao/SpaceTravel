@@ -30,6 +30,7 @@
 		C8D1846625E61E8200F2C258 /* PhotoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1846525E61E8200F2C258 /* PhotoListViewModel.swift */; };
 		C8D1846B25E61E8F00F2C258 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1846A25E61E8F00F2C258 /* DetailViewModel.swift */; };
 		C8D1847025E61FBD00F2C258 /* nasa.json in Resources */ = {isa = PBXBuildFile; fileRef = C8D1846F25E61FBD00F2C258 /* nasa.json */; };
+		C8D1848B25E62E1F00F2C258 /* PhotoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1848A25E62E1F00F2C258 /* PhotoListCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		C8D1846525E61E8200F2C258 /* PhotoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewModel.swift; sourceTree = "<group>"; };
 		C8D1846A25E61E8F00F2C258 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		C8D1846F25E61FBD00F2C258 /* nasa.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = nasa.json; sourceTree = "<group>"; };
+		C8D1848A25E62E1F00F2C258 /* PhotoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 		C8D183DF25E6166F00F2C258 /* SpaceTravel */ = {
 			isa = PBXGroup;
 			children = (
+				C8D1848925E62E0700F2C258 /* Cell */,
 				C8D1844D25E61DE000F2C258 /* ViewController */,
 				C8D1844C25E61DD400F2C258 /* ViewModel */,
 				C8D1844325E61C2A00F2C258 /* Model */,
@@ -219,6 +222,14 @@
 				C8D1845B25E61E0B00F2C258 /* PhotoDetailViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		C8D1848925E62E0700F2C258 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C8D1848A25E62E1F00F2C258 /* PhotoListCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,6 +375,7 @@
 				C8D1846625E61E8200F2C258 /* PhotoListViewModel.swift in Sources */,
 				C8D183E125E6166F00F2C258 /* AppDelegate.swift in Sources */,
 				C8D183E325E6166F00F2C258 /* SceneDelegate.swift in Sources */,
+				C8D1848B25E62E1F00F2C258 /* PhotoListCollectionViewCell.swift in Sources */,
 				C8D1846B25E61E8F00F2C258 /* DetailViewModel.swift in Sources */,
 				C8D1845725E61E0000F2C258 /* PhotoListViewController.swift in Sources */,
 				C8D1842525E6180000F2C258 /* SpaceListCoordinator.swift in Sources */,

@@ -10,7 +10,6 @@ import UIKit
 class MainViewModel: NSObject {
     let service = ServiceHelper(withBaseURL: "https://raw.githubusercontent.com/")
     
-    var respone: Observable<[Response]?> = Observable([])
     var errorMessage: Observable<String?> = Observable(nil)
     var error: Observable<Error?> = Observable(nil)
     
@@ -32,9 +31,7 @@ class MainViewModel: NSObject {
             switch result {
                 case .success(let feedResult):
                 
-                    self?.respone.value = feedResult
-                        
-                    self?.pushToPhotoView()
+                    self?.pushToPhotoView(respone: feedResult)
 
                 case .failure(let error):
                     self?.setError(error)
@@ -62,6 +59,7 @@ extension MainViewModel {
         pushButton.setTitle("Request", for: .normal)
         pushButton.setTitleColor(.systemBlue, for: .normal)
         pushButton.addTarget(self, action: #selector(fetchData), for: .touchUpInside)
+        pushButton.showsTouchWhenHighlighted = true
         
         rootView.addSubview(titleLabel)
         rootView.addSubview(pushButton)
@@ -78,7 +76,7 @@ extension MainViewModel {
         NSLayoutConstraint.activate([
             pushButton.centerXAnchor.constraint(equalTo: guide.centerXAnchor),
             pushButton.centerYAnchor.constraint(equalTo: guide.centerYAnchor),
-            pushButton.heightAnchor.constraint(equalToConstant: 20),
+            pushButton.heightAnchor.constraint(equalToConstant: 44),
             pushButton.widthAnchor.constraint(equalToConstant: 100),
             
             titleLabel.bottomAnchor.constraint(equalTo: pushButton.topAnchor, constant: -80),
@@ -88,7 +86,7 @@ extension MainViewModel {
         ])
     }
     
-    func pushToPhotoView() {
-        coordinator?.goToPhotoView()
+    func pushToPhotoView(respone: [Response]) {
+        coordinator?.goToPhotoView(respone: respone)
     }
 }
