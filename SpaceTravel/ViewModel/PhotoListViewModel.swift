@@ -78,6 +78,8 @@ class PhotoListViewModel: NSObject {
     
     func configureCollectionView(Add to: UIView) {
         
+        to.backgroundColor = .systemBackground
+        
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false

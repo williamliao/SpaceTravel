@@ -61,11 +61,9 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
             thumbnailImageView.heightAnchor.constraint(equalToConstant: 100),
             
             titleLabel.leadingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: 5),
-            //titleLabel.centerXAnchor.constraint(equalTo: thumbnailImageView.centerXAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.trailingAnchor, constant: -5),
             titleLabel.topAnchor.constraint(equalTo: thumbnailImageView.topAnchor, constant: 5),
             titleLabel.bottomAnchor.constraint(equalTo: thumbnailImageView.bottomAnchor, constant: -5),
-            
             
             act.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             act.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -83,7 +81,6 @@ extension PhotoListCollectionViewCell {
             self.showImage(image: image)
             isLoading(isLoading: false)
         }
-        
     }
     
     private func showImage(image: UIImage?) {

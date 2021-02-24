@@ -20,5 +20,9 @@ class MainViewController: UIViewController {
     
     func render() {
         viewModel.createView(rootView: view)
+        
+        viewModel.isLoading.bind { [weak self] (isLoading) in
+            self?.viewModel.isLoading(isLoading: isLoading)
+        }
     }
 }

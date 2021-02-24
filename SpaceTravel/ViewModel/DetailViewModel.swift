@@ -23,6 +23,8 @@ class DetailViewModel: NSObject {
     
     var descriptionTextViewHeightConstraint: NSLayoutConstraint!
     
+    private var act = UIActivityIndicatorView(style: .large)
+    
     func createView(rootView: UIView) {
         
         rootView.backgroundColor = .systemBackground
@@ -64,6 +66,7 @@ class DetailViewModel: NSObject {
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(copyRightLabel)
+        contentView.addSubview(act)
         
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,6 +75,7 @@ class DetailViewModel: NSObject {
         copyRightLabel.translatesAutoresizingMaskIntoConstraints = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
+        act.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             
@@ -95,6 +99,9 @@ class DetailViewModel: NSObject {
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
             imageView.heightAnchor.constraint(equalToConstant: 300),
+            
+            act.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 20),
+            act.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -143,8 +150,10 @@ class DetailViewModel: NSObject {
     }
     
     func configureImage(with url: URL) {
+        isLoading(isLoading: true)
         cancellable = self.loadImage(for: url).sink { [unowned self] image in
             self.showImage(image: image)
+            isLoading(isLoading: false)
         }
     }
     
@@ -169,5 +178,14 @@ class DetailViewModel: NSObject {
             return ImageLoader.shared.loadImage(from: url)
         })
         .eraseToAnyPublisher()
+    }
+    
+    func isLoading(isLoading: Bool) {
+        if isLoading {
+            act.startAnimating()
+        } else {
+            act.stopAnimating()
+        }
+        act.isHidden = !isLoading
     }
 }

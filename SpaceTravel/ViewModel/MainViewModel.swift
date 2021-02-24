@@ -20,6 +20,7 @@ class MainViewModel: NSObject {
     var titleLabel: UILabel!
     var pushButton: UIButton!
     
+    private var act = UIActivityIndicatorView(style: .large)
     
     @objc func fetchData() {
         
@@ -64,6 +65,7 @@ extension MainViewModel {
         
         rootView.addSubview(titleLabel)
         rootView.addSubview(pushButton)
+        rootView.addSubview(act)
         
         createConstraint(rootView: rootView)
     }
@@ -71,6 +73,7 @@ extension MainViewModel {
     func createConstraint(rootView: UIView) {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         pushButton.translatesAutoresizingMaskIntoConstraints = false
+        act.translatesAutoresizingMaskIntoConstraints = false
         
         let guide = rootView.safeAreaLayoutGuide
         
@@ -84,10 +87,22 @@ extension MainViewModel {
             titleLabel.heightAnchor.constraint(equalToConstant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 10),
             titleLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -10),
+            
+            act.centerXAnchor.constraint(equalTo: rootView.centerXAnchor),
+            act.centerYAnchor.constraint(equalTo: rootView.centerYAnchor),
         ])
     }
     
     func pushToPhotoView(respone: [Response]) {
         coordinator?.goToPhotoView(respone: respone)
+    }
+    
+    func isLoading(isLoading: Bool) {
+        if isLoading {
+            act.startAnimating()
+        } else {
+            act.stopAnimating()
+        }
+        act.isHidden = !isLoading
     }
 }
