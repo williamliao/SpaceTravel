@@ -66,14 +66,13 @@ class PhotoListViewModel: NSObject {
     
     func makeDateSourceForCollectionView() {
         if #available(iOS 13.0, *) {
-            dataSource = self.makeDataSource()
+            //dataSource = self.makeDataSource()
             
             collectionView.dataSource = dataSource
             
         } else {
-            //collectionView.dataSource = self
+            collectionView.dataSource = self
         }
-        
     }
     
     func configureCollectionView(Add to: UIView) {
@@ -83,7 +82,9 @@ class PhotoListViewModel: NSObject {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-       
+        
+        makeDateSourceForCollectionView()
+        
         collectionView.register(PhotoListCollectionViewCell.self
                                 , forCellWithReuseIdentifier: PhotoListCollectionViewCell.reuseIdentifier)
         
@@ -96,23 +97,48 @@ class PhotoListViewModel: NSObject {
             collectionView.topAnchor.constraint(equalTo: to.safeAreaLayoutGuide.topAnchor),
         ])
         
-        makeDateSourceForCollectionView()
-        
     }
+}
+
+extension PhotoListViewModel: UICollectionViewDataSource {
+   
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        guard let count = self.respone.value?.count else {
+          return 0
+        }
+        
+        return count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let res = self.respone.value else {
+          return UICollectionViewCell()
+        }
+        
+        guard let cell = self.configureCell(collectionView: collectionView, respone: res[indexPath.row], indexPath: indexPath) else {
+            return UICollectionViewCell()
+        }
+        return cell
+    }
+
 }
 
 extension PhotoListViewModel: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-//        guard let res = respone.value?[indexPath.row] else {
-//            return
-//        }
-        
-        guard let res = dataSource.itemIdentifier(for: indexPath) else {
-          return
+        if #available(iOS 13.0, *) {
+            guard let res = dataSource.itemIdentifier(for: indexPath) else {
+              return
+            }
+            coordinator?.goToDetailView(respone: res)
+        } else {
+            guard let res = respone.value?[indexPath.row] else {
+                return
+            }
+            coordinator?.goToDetailView(respone: res)
         }
-        
-        coordinator?.goToDetailView(respone: res)
     }
 }
 
