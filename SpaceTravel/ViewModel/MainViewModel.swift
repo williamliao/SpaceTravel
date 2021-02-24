@@ -20,6 +20,7 @@ class MainViewModel: NSObject {
     var titleLabel: UILabel!
     var pushButton: UIButton!
     
+    
     @objc func fetchData() {
         
         self.isLoading.value = true

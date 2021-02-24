@@ -12,8 +12,9 @@ enum Section: Int, CaseIterable {
 }
 
 class PhotoListViewModel: NSObject {
-    var respone: Observable<[Response]?> = Observable(nil)
+    var respone: Observable<[Response]?> = Observable([])
     var collectionView: UICollectionView!
+    var coordinator: SpaceListCoordinator?
     
     @available(iOS 13.0, *)
     lazy var dataSource  = makeDataSource()
@@ -95,6 +96,21 @@ class PhotoListViewModel: NSObject {
         
         makeDateSourceForCollectionView()
         
+    }
+}
+
+extension PhotoListViewModel: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+//        guard let res = respone.value?[indexPath.row] else {
+//            return
+//        }
+        
+        guard let res = dataSource.itemIdentifier(for: indexPath) else {
+          return
+        }
+        
+        coordinator?.goToDetailView(respone: res)
     }
 }
 

@@ -54,10 +54,11 @@ class SpaceListCoordinator: Coordinator {
         photo.coordinator = self
         photoListViewModel.respone.value = respone
         photo.viewModel = photoListViewModel
+        photo.viewModel.coordinator = self
         return photo
     }
     
-    func createDetailView() -> UIViewController {
+    func createDetailView() -> PhotoDetailViewController {
         let detail = PhotoDetailViewController()
         detail.title = "Detail"
         detail.coordinator = self
@@ -76,8 +77,10 @@ extension SpaceListCoordinator {
         rootViewController.pushViewController(photoListVC, animated: true)
     }
     
-    func goToDetailView() {
+    func goToDetailView(respone: Response) {
         let topDetailVC = createDetailView()
+        
+        topDetailVC.viewModel.respone.value = respone
         
         rootViewController.pushViewController(topDetailVC, animated: true)
     }
