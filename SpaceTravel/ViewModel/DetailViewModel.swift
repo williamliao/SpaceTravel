@@ -126,7 +126,7 @@ class DetailViewModel: NSObject {
     
     func configureView(respone: Response) {
         
-        dateLabel.text = respone.date
+        formatDateString(dateString: respone.date)
         titleLabel.text = respone.title
         copyRightLabel.text = respone.copyright
         descriptionTextView.text = respone.description
@@ -147,6 +147,23 @@ class DetailViewModel: NSObject {
             configureImage(with: url)
         }
         
+    }
+    
+    func formatDateString(dateString: String) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        guard let date = formatter.date(from: dateString) else {
+            return
+        }
+
+        formatter.dateFormat = "yyyy"
+        let year = formatter.string(from: date)
+        formatter.dateFormat = "MMM"
+        let month = formatter.string(from: date)
+        formatter.dateFormat = "dd"
+        let day = formatter.string(from: date)
+        
+        dateLabel.text = "\(year) \(month). \(day)"
     }
     
     func configureImage(with url: URL) {
