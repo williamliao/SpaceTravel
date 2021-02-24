@@ -12,6 +12,9 @@ enum Section: Int, CaseIterable {
 }
 
 class PhotoListViewModel: NSObject {
+    
+    var firstLoad = true
+    
     var respone: Observable<[Response]?> = Observable([])
     var collectionView: UICollectionView!
     var coordinator: SpaceListCoordinator?
@@ -54,6 +57,7 @@ class PhotoListViewModel: NSObject {
         dataSource.apply(snapshot, animatingDifferences: false)
         
         //Append annotations to their corresponding sections
+        
         self.respone.value?.forEach { (respone) in
             snapshot.appendItems([respone], toSection: .main)
         }
@@ -66,9 +70,15 @@ class PhotoListViewModel: NSObject {
     
     func makeDateSourceForCollectionView() {
         if #available(iOS 13.0, *) {
-            //dataSource = self.makeDataSource()
+           
+            if (!firstLoad) {
+                dataSource = makeDataSource()
+                collectionView.dataSource = dataSource
+                return
+            }
             
             collectionView.dataSource = dataSource
+            firstLoad = false
             
         } else {
             collectionView.dataSource = self
@@ -97,6 +107,10 @@ class PhotoListViewModel: NSObject {
             collectionView.topAnchor.constraint(equalTo: to.safeAreaLayoutGuide.topAnchor),
         ])
         
+    }
+    
+    func clearDateSource() {
+        self.respone.value = []
     }
 }
 

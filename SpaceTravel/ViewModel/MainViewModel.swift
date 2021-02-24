@@ -8,8 +8,9 @@
 import UIKit
 
 class MainViewModel: NSObject {
-    let service = ServiceHelper(withBaseURL: "https://raw.githubusercontent.com/")
+    let service = ServiceHelper(withBaseURL: "https://raw.githubusercontent.com")
     
+    var respone: Observable<[Response]?> = Observable([])
     var errorMessage: Observable<String?> = Observable(nil)
     var error: Observable<Error?> = Observable(nil)
     
@@ -24,6 +25,11 @@ class MainViewModel: NSObject {
     
     @objc func fetchData() {
         
+        if (self.respone.value?.count ?? 0 > 0) {
+            self.pushToPhotoView(respone: self.respone.value!)
+            return
+        }
+        
         self.isLoading.value = true
         
         self.service.getFeed(fromRoute: Routes.dataSet, parameters: nil) { [weak self] (result) in
@@ -34,6 +40,7 @@ class MainViewModel: NSObject {
                 case .success(let feedResult):
                 
                     self?.pushToPhotoView(respone: feedResult)
+                    self?.respone.value = feedResult
 
                 case .failure(let error):
                     self?.setError(error)
@@ -44,6 +51,10 @@ class MainViewModel: NSObject {
     func setError(_ error: Error) {
         self.errorMessage = Observable(error.localizedDescription)
         self.error = Observable(error)
+    }
+    
+    deinit {
+        print("MainViewModel deinit")
     }
 }
 

@@ -48,7 +48,7 @@ extension APIClient {
                 var cacheData:Data? = nil
                 if httpResponse.statusCode == 200 {
                     
-                    if request.url!.absoluteString.contains("NasaDataSet") {
+                    if request.url!.absoluteString.contains("apod.json") {
                         if self.cacheRespone.cachedResponse(for: request) == nil,
                             let data = try? Data(contentsOf: request.url!) {
                             self.cacheRespone.storeCachedResponse(CachedURLResponse(response: httpResponse, data: data), for: request)
@@ -103,6 +103,7 @@ extension APIClient {
         }
     
     func clientURLRequest(url: URL , method: RequestType, params: Dictionary<String, AnyObject>? = nil) -> NSMutableURLRequest {
+       
         
         let request = NSMutableURLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 30.0)
         
