@@ -15,7 +15,7 @@ public struct Routes {
     static let dataSet = Route(endpoint: "/cmmobile/NasaDataSet/main/apod.json")
 }
 
-class ServiceHelper: NSObject, APIClient {
+class ServiceHelper: NetworkClient {
    
     var cacheRespone: URLCache = URLCache()
     
@@ -24,25 +24,6 @@ class ServiceHelper: NSObject, APIClient {
     init(withBaseURL baseURL: String) {
         self.baseURL = baseURL
     }
-    
-    lazy var session: URLSession = { [weak self] in
-        
-        let cachesURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-        let diskCacheURL = cachesURL.appendingPathComponent("DownloadCache")
-        let cache = URLCache(memoryCapacity: 10_000_000, diskCapacity: 1024 * 1024 * 100, directory: diskCacheURL)
-        
-        let configuration = URLSessionConfiguration.default
-        configuration.urlCache = cache
-        configuration.timeoutIntervalForResource = 60
-        if #available(iOS 11, *) {
-            configuration.waitsForConnectivity = true
-        }
-        let session = URLSession(
-            configuration: configuration,
-            delegate: self,
-            delegateQueue: nil)
-        return session
-    }()
     
     func getFeed(fromRoute route: Route,  parameters: Any?, completion: @escaping (APIResult<[Response], Error>) -> Void) {
         guard let url = URL(string: self.baseURL+route.endpoint) else {
@@ -55,13 +36,5 @@ class ServiceHelper: NSObject, APIClient {
                guard let feedResult = json as? [Response] else { return  nil }
                return feedResult
            }, completion: completion)
-    }
-}
-
-extension ServiceHelper: URLSessionDelegate {
-  
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        print("Error: \(String(describing: error?.localizedDescription))")
-        task.cancel()
     }
 }
