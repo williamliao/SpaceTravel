@@ -20,7 +20,18 @@ class FakeData {
         return url
     }
     
-    func getData() -> [Response] {
+    func getData() -> Data {
+        guard
+          let url = getURL(),
+          let data = try? Data(contentsOf: url)
+          else {
+            return Data()
+        }
+        
+        return data
+    }
+    
+    func getDataRespone() -> [Response] {
         
       guard
         let url = getURL(),

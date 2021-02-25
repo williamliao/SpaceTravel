@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 enum APIResult<T, U> where U: Error  {
     case success(T)

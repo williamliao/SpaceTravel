@@ -12,6 +12,8 @@ import XCTest
 class SpaceTravelTests: XCTestCase {
     
     var sut: URLSession!
+    var subject: MockURLSession!
+    let endpoint = URL(string: "https://raw.githubusercontent.com/cmmobile/NasaDataSet/main/apod.json")!
     
     var respone = [Response]()
     var fakeRespone = [Response]()
@@ -23,6 +25,7 @@ class SpaceTravelTests: XCTestCase {
     
     override func setUpWithError() throws {
         sut = URLSession(configuration: .default)
+        subject = MockURLSession()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
@@ -50,7 +53,7 @@ extension SpaceTravelTests {
     func testListCount() {
         let exception = XCTestExpectation()
         
-        let fakeRespone = fakeData.getData()
+        let fakeRespone = fakeData.getDataRespone()
         
         service.getFeed(fromRoute: Routes.dataSet, parameters: nil) { [weak self] (result) in
             
@@ -118,7 +121,7 @@ extension SpaceTravelTests {
     func testFormatData() {
        let viewModel = DetailViewModel()
         
-        let fakeRespone = fakeData.getData()
+        let fakeRespone = fakeData.getDataRespone()
         
         let dataString = fakeRespone[0].date
         
@@ -130,7 +133,7 @@ extension SpaceTravelTests {
     func testDetailTextNotNil() {
        let viewModel = DetailViewModel()
         
-        let fakeRespone = fakeData.getData()
+        let fakeRespone = fakeData.getDataRespone()
         
         let vc = UIViewController()
         
@@ -153,7 +156,7 @@ extension SpaceTravelTests {
     func testPhotoListNotNil() {
        let viewModel = PhotoListViewModel()
         
-        let fakeRespone = fakeData.getData()
+        let fakeRespone = fakeData.getDataRespone()
         
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.register(PhotoListCollectionViewCell.self
