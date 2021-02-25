@@ -12,7 +12,6 @@ import XCTest
 class SpaceTravelTests: XCTestCase {
     
     var sut: URLSession!
-    var subject: MockURLSession!
     let endpoint = URL(string: "https://raw.githubusercontent.com/cmmobile/NasaDataSet/main/apod.json")!
     
     var respone = [Response]()
@@ -25,7 +24,6 @@ class SpaceTravelTests: XCTestCase {
     
     override func setUpWithError() throws {
         sut = URLSession(configuration: .default)
-        subject = MockURLSession()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
