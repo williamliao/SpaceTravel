@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class SpaceListCoordinator: Coordinator {
     // MARK: - Properties
@@ -63,6 +64,7 @@ class SpaceListCoordinator: Coordinator {
         detail.title = "Detail"
         detail.coordinator = self
         detail.viewModel = photoDetailViewModel
+        detail.viewModel.coordinator = self
         return detail
     }
     
@@ -83,5 +85,12 @@ extension SpaceListCoordinator {
         topDetailVC.viewModel.respone.value = respone
         
         rootViewController.pushViewController(topDetailVC, animated: true)
+    }
+    
+    func openWebUrl(url: URL) {
+        let config = SFSafariViewController.Configuration()
+
+        let vc = SFSafariViewController(url: url, configuration: config)
+        rootViewController.present(vc, animated: true)
     }
 }

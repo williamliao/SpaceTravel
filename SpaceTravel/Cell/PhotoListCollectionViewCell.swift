@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 
+
 class PhotoListCollectionViewCell: UICollectionViewCell {
     static var reuseIdentifier: String {
         return String(describing: PhotoListCollectionViewCell.self)
@@ -18,6 +19,8 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     
     private var cancellable: AnyCancellable?
     private var animator: UIViewPropertyAnimator?
+    
+    var apod_site: URL?
     
     private var act = UIActivityIndicatorView(style: .large)
     
@@ -42,7 +45,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         titleLabel.textAlignment = .center
      
         thumbnailImageView = UIImageView()
-
+    
         contentView.addSubview(thumbnailImageView)
         contentView.addSubview(act)
         thumbnailImageView.addSubview(titleLabel)

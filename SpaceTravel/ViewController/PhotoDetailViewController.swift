@@ -20,6 +20,7 @@ class PhotoDetailViewController: UIViewController {
  
     func render() {
         viewModel.createView(rootView: view)
+        viewModel.createInfoBarItem(navItem: self.navigationItem)
         
         viewModel.respone.bind { [weak self] (_) in
             guard let res = self?.viewModel.respone.value else {

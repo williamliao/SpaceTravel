@@ -13,78 +13,21 @@ enum Section: Int, CaseIterable {
 
 class PhotoListViewModel: NSObject {
     
+    // MARK:- property
     var firstLoad = true
     
     var respone: Observable<[Response]?> = Observable([])
-    var collectionView: UICollectionView!
-    var coordinator: SpaceListCoordinator?
     
     @available(iOS 13.0, *)
     lazy var dataSource  = makeDataSource()
     
-    @available(iOS 13.0, *)
-    func getDatasource() -> UICollectionViewDiffableDataSource<Section, Response> {
-        return dataSource
-    }
-    
-    func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Response> {
-        
-        return UICollectionViewDiffableDataSource<Section, Response>(collectionView: collectionView) { (collectionView, indexPath, respone) -> PhotoListCollectionViewCell? in
-            let cell = self.configureCell(collectionView: collectionView, respone: respone, indexPath: indexPath)
-            return cell
-        }
-    }
-    
-    func configureCell(collectionView: UICollectionView, respone: Response, indexPath: IndexPath) -> PhotoListCollectionViewCell? {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoListCollectionViewCell.reuseIdentifier, for: indexPath) as? PhotoListCollectionViewCell
-        
-        cell?.titleLabel.text = respone.title
-     
-        if let url = URL(string: respone.url) {
-            cell?.configureImage(with: url)
-        }
-        
-        return cell
-    }
-    
-    @available(iOS 13.0, *)
-    func applyInitialSnapshots() {
-        let dataSource = getDatasource()
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Response>()
-        
-        //Append available sections
-        Section.allCases.forEach { snapshot.appendSections([$0]) }
-        dataSource.apply(snapshot, animatingDifferences: false)
-        
-        //Append annotations to their corresponding sections
-        
-        self.respone.value?.forEach { (respone) in
-            snapshot.appendItems([respone], toSection: .main)
-        }
-        
-        //Force the update on the main thread to silence a warning about tableview not being in the hierarchy!
-        DispatchQueue.main.async {
-            dataSource.apply(snapshot, animatingDifferences: false)
-        }
-    }
-    
-    func makeDateSourceForCollectionView() {
-        if #available(iOS 13.0, *) {
-           
-            if (!firstLoad) {
-                dataSource = makeDataSource()
-                collectionView.dataSource = dataSource
-                return
-            }
-            
-            collectionView.dataSource = dataSource
-            firstLoad = false
-            
-        } else {
-            collectionView.dataSource = self
-        }
-    }
-    
+    // MARK: - component
+    var collectionView: UICollectionView!
+    var coordinator: SpaceListCoordinator?
+
+}
+// MARK: - Public
+extension PhotoListViewModel {
     func configureCollectionView(Add to: UIView) {
         
         to.backgroundColor = .systemBackground
@@ -109,11 +52,79 @@ class PhotoListViewModel: NSObject {
         
     }
     
-    func clearDateSource() {
-        self.respone.value = []
+    func makeDateSourceForCollectionView() {
+        if #available(iOS 13.0, *) {
+           
+            if (!firstLoad) {
+                dataSource = makeDataSource()
+                collectionView.dataSource = dataSource
+                return
+            }
+            
+            collectionView.dataSource = dataSource
+            firstLoad = false
+            
+        } else {
+            collectionView.dataSource = self
+        }
     }
 }
 
+// MARK: - Private
+extension PhotoListViewModel {
+    
+    private func configureCell(collectionView: UICollectionView, respone: Response, indexPath: IndexPath) -> PhotoListCollectionViewCell? {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoListCollectionViewCell.reuseIdentifier, for: indexPath) as? PhotoListCollectionViewCell
+        
+        cell?.titleLabel.text = respone.title
+        
+        if let url = URL(string: respone.url) {
+            cell?.configureImage(with: url)
+        }
+        
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDiffableDataSource
+extension PhotoListViewModel {
+    
+    @available(iOS 13.0, *)
+    private func getDatasource() -> UICollectionViewDiffableDataSource<Section, Response> {
+        return dataSource
+    }
+    
+    private func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Response> {
+        
+        return UICollectionViewDiffableDataSource<Section, Response>(collectionView: collectionView) { (collectionView, indexPath, respone) -> PhotoListCollectionViewCell? in
+            let cell = self.configureCell(collectionView: collectionView, respone: respone, indexPath: indexPath)
+            return cell
+        }
+    }
+    
+    @available(iOS 13.0, *)
+    func applyInitialSnapshots() {
+        let dataSource = getDatasource()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Response>()
+        
+        //Append available sections
+        Section.allCases.forEach { snapshot.appendSections([$0]) }
+        dataSource.apply(snapshot, animatingDifferences: false)
+        
+        //Append annotations to their corresponding sections
+        
+        self.respone.value?.forEach { (respone) in
+            snapshot.appendItems([respone], toSection: .main)
+        }
+        
+        //Force the update on the main thread to silence a warning about tableview not being in the hierarchy!
+        DispatchQueue.main.async {
+            dataSource.apply(snapshot, animatingDifferences: false)
+        }
+    }
+}
+
+// MARK: - UICollectionViewDataSource
 extension PhotoListViewModel: UICollectionViewDataSource {
    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -138,7 +149,7 @@ extension PhotoListViewModel: UICollectionViewDataSource {
     }
 
 }
-
+// MARK: - UICollectionViewDelegate
 extension PhotoListViewModel: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -155,7 +166,7 @@ extension PhotoListViewModel: UICollectionViewDelegate {
         }
     }
 }
-
+// MARK: - UICollectionViewDelegateFlowLayout
 extension PhotoListViewModel: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,

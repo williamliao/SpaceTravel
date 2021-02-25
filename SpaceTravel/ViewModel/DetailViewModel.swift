@@ -9,8 +9,14 @@ import UIKit
 import Combine
 
 class DetailViewModel: NSObject {
+    
+    // MARK:- property
     var respone: Observable<Response?> = Observable(nil)
+    
+    // MARK: - component
     private var cancellable: AnyCancellable?
+    
+    var coordinator: SpaceListCoordinator?
     
     var contentView: UIView!
     var scrollView:UIScrollView!
@@ -20,11 +26,15 @@ class DetailViewModel: NSObject {
     var dateLabel: UILabel!
     var descriptionTextView: UITextView!
     var imageView: UIImageView!
+    var infoButton: UIButton!
     
     var descriptionTextViewHeightConstraint: NSLayoutConstraint!
     
     private var act = UIActivityIndicatorView(style: .large)
     
+}
+// MARK: - View
+extension DetailViewModel {
     func createView(rootView: UIView) {
         
         rootView.backgroundColor = .systemBackground
@@ -76,7 +86,7 @@ class DetailViewModel: NSObject {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         act.translatesAutoresizingMaskIntoConstraints = false
-        
+       
         NSLayoutConstraint.activate([
             
             scrollView.leadingAnchor.constraint(equalTo: rootView.leadingAnchor),
@@ -99,7 +109,7 @@ class DetailViewModel: NSObject {
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
             imageView.heightAnchor.constraint(equalToConstant: 300),
-            
+           
             act.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 20),
             act.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
@@ -149,7 +159,31 @@ class DetailViewModel: NSObject {
         
     }
     
-    func formatDateString(dateString: String) {
+    func createInfoBarItem(navItem: UINavigationItem) {
+        
+        infoButton = UIButton(type: .infoLight)
+        infoButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
+        
+        let barButton = UIBarButtonItem(customView: infoButton)
+        navItem.rightBarButtonItem = barButton
+    }
+}
+
+// MARK: - Public
+extension DetailViewModel {
+     func configureImage(with url: URL) {
+         isLoading(isLoading: true)
+         cancellable = self.loadImage(for: url).sink { [unowned self] image in
+             self.showImage(image: image)
+             isLoading(isLoading: false)
+         }
+     }
+}
+
+// MARK: - Private
+extension DetailViewModel {
+    
+    private func formatDateString(dateString: String) {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         guard let date = formatter.date(from: dateString) else {
@@ -164,14 +198,6 @@ class DetailViewModel: NSObject {
         let day = formatter.string(from: date)
         
         dateLabel.text = "\(year) \(month). \(day)"
-    }
-    
-    func configureImage(with url: URL) {
-        isLoading(isLoading: true)
-        cancellable = self.loadImage(for: url).sink { [unowned self] image in
-            self.showImage(image: image)
-            isLoading(isLoading: false)
-        }
     }
     
     private func showImage(image: UIImage?) {
@@ -189,7 +215,7 @@ class DetailViewModel: NSObject {
         }
     }
         
-    func loadImage(for url: URL) -> AnyPublisher<UIImage?, Never> {
+    private func loadImage(for url: URL) -> AnyPublisher<UIImage?, Never> {
         return Just(url)
         .flatMap({ poster -> AnyPublisher<UIImage?, Never> in
             return ImageLoader.shared.loadImage(from: url)
@@ -197,12 +223,22 @@ class DetailViewModel: NSObject {
         .eraseToAnyPublisher()
     }
     
-    func isLoading(isLoading: Bool) {
+    private func isLoading(isLoading: Bool) {
         if isLoading {
             act.startAnimating()
         } else {
             act.stopAnimating()
         }
         act.isHidden = !isLoading
+    }
+}
+
+extension DetailViewModel {
+    @objc func infoButtonTapped() {
+        if let res = self.respone.value {
+            if let url = URL(string: res.apod_site) {
+                coordinator?.openWebUrl(url: url)
+            }
+        }
     }
 }

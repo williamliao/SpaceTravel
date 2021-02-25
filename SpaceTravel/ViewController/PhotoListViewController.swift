@@ -18,11 +18,6 @@ class PhotoListViewController: UIViewController {
         render()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewModel.clearDateSource()
-    }
-    
     func render() {
         
         viewModel.configureCollectionView(Add: view)
