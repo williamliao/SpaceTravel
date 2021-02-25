@@ -106,7 +106,7 @@ extension SpaceTravelTests {
         let bundle = Bundle(for: type(of: self))
       
         guard let url = bundle.url(forResource: "nasa", withExtension: "json") else {
-            XCTFail("Missing file: User.json")
+            XCTFail("Missing file: nasa.json")
             return
         }
 
@@ -132,26 +132,22 @@ extension SpaceTravelTests {
         
         let fakeRespone = fakeData.getData()
         
-        let dataString = fakeRespone[0].date
+        let vc = UIViewController()
         
-        let formatDataString = viewModel.formatDateString(dateString: dataString)
+        viewModel.createView(rootView: vc.view)
+        viewModel.respone.value = fakeRespone[0]
         
-        let title = fakeRespone[0].title
-        let copyRight = fakeRespone[0].copyright
-        let description = fakeRespone[0].description
-        let apod = fakeRespone[0].apod_site
-        let url = fakeRespone[0].url
-        let hdurl = fakeRespone[0].hdurl
-        let mediaType = fakeRespone[0].media_type
-        
+        viewModel.configureView(respone: fakeRespone[0])
+      
+        let title = viewModel.titleLabel.text
+        let copyRight = viewModel.copyRightLabel.text
+        let description = viewModel.descriptionTextView.text
+        let date = viewModel.dateLabel.text
+
         XCTAssertNotNil(title)
         XCTAssertNotNil(copyRight)
         XCTAssertNotNil(description)
-        XCTAssertNotNil(apod)
-        XCTAssertNotNil(url)
-        XCTAssertNotNil(hdurl)
-        XCTAssertNotNil(mediaType)
-        XCTAssertNotNil(formatDataString)
+        XCTAssertNotNil(date)
     }
     
     func testPhotoListNotNil() {
