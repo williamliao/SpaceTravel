@@ -16,9 +16,55 @@ public enum RequestType: String {
     case get = "GET", post = "POST", put = "PUT", delete = "DELETE"
 }
 
+enum ServerError: Int, Error {
+    case unknownError
+    case connectionError
+    case invalidCredentials
+    case invalidRequest
+    case notFound = 404
+    case invalidResponse
+    case serverError
+    case serverUnavailable
+    case timeOut
+    case unsuppotedURL
+    case jsonDecodeFailed
+    case badURL
+}
+
+extension ServerError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .unknownError:
+            return NSLocalizedString("unknownError", comment: "")
+        case .connectionError:
+            return NSLocalizedString("connectionError", comment: "")
+        case .invalidCredentials:
+            return NSLocalizedString("invalidCredentials", comment: "")
+        case .invalidRequest:
+            return NSLocalizedString("invalidRequest", comment: "")
+        case .notFound:
+            return NSLocalizedString("notFound", comment: "")
+        case .invalidResponse:
+            return NSLocalizedString("invalidResponse", comment: "")
+        case .serverError:
+            return NSLocalizedString("serverError", comment: "")
+        case .serverUnavailable:
+            return NSLocalizedString("serverUnavailable", comment: "")
+        case .timeOut:
+            return NSLocalizedString("timeOut", comment: "")
+        case .unsuppotedURL:
+            return NSLocalizedString("unsuppotedURL", comment: "")
+        case .jsonDecodeFailed:
+            return NSLocalizedString("jsonDecodeFailed", comment: "")
+        case .badURL:
+            return NSLocalizedString("Bad Url", comment: "")
+        }
+    }
+}
+
 class NetworkClient {
     
-    typealias JSONTaskCompletionHandler = (Decodable?, Error?) -> Void
+    typealias JSONTaskCompletionHandler = (Decodable?, ServerError?) -> Void
 
     private var session: URLSessionProtocol
 
@@ -35,12 +81,12 @@ class NetworkClient {
                 let errorString = (error! as NSError).userInfo["NSLocalizedDescription"]
                // let code = (error! as NSError).code
                 print("Error: \(String(describing: errorString))")
-                completion(nil, error)
+                completion(nil, ServerError.unknownError)
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse else {
-                completion(nil, error)
+                completion(nil, ServerError.unknownError)
                 return
             }
             
@@ -50,13 +96,15 @@ class NetworkClient {
                         let genericModel = try decoder.decode(decodingType, from: data)
                         completion(genericModel, nil)
                     } catch {
-                        completion(nil, error)
+                        completion(nil, ServerError.jsonDecodeFailed)
                     }
                 } else {
-                    completion(nil, error)
+                    completion(nil, ServerError.serverError)
                 }
             } else {
                 print("statusCode \(httpResponse.statusCode)")
+                
+                
             }
             
             
@@ -64,7 +112,7 @@ class NetworkClient {
         return task
     }
 
-    func fetch<T: Decodable>(with request: URLRequest, decode: @escaping (Decodable) -> T?, completion: @escaping (APIResult<T, Error>) -> Void) {
+    func fetch<T: Decodable>(with request: URLRequest, decode: @escaping (Decodable) -> T?, completion: @escaping (APIResult<T, ServerError>) -> Void) {
        
         let task = decodingTask(with: request, decodingType: T.self) { (json , error) in
             

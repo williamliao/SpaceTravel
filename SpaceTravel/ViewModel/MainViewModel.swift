@@ -17,7 +17,7 @@ class MainViewModel: NSObject {
     var isLoading: Observable<Bool> = Observable(false)
 
     // MARK: - component
-    let service = ServiceHelper(withBaseURL: "https://raw.githubusercontent.com")
+    let service = ServiceHelper()
     var coordinator: SpaceListCoordinator?
     
     var titleLabel: UILabel!

@@ -19,16 +19,18 @@ class ServiceHelper: NetworkClient {
    
     var cacheRespone: URLCache = URLCache()
     
-    let baseURL: String
+   /* let baseURL: String
     
     init(withBaseURL baseURL: String) {
         self.baseURL = baseURL
-    }
+    }*/
     
-    func getFeed(fromRoute route: Route,  parameters: Any?, completion: @escaping (APIResult<[Response], Error>) -> Void) {
-        guard let url = URL(string: self.baseURL+route.endpoint) else {
-            let errorTemp = NSError(domain:"", code:999, userInfo:["error": "badURL"])
-            completion(.failure(errorTemp))
+    func getFeed(fromRoute route: Route,  parameters: Any?, completion: @escaping (APIResult<[Response], ServerError>) -> Void) {
+        
+        let baseURL = "https://raw.githubusercontent.com"
+        
+        guard let url = URL(string: baseURL+route.endpoint) else {
+            completion(.failure(ServerError.badURL))
             return
         }
        

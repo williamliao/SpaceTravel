@@ -11,24 +11,25 @@ import XCTest
 
 class SpaceTravelTests: XCTestCase {
     
-    var sut: URLSession!
+    var sut : ServiceHelper!
+    var mockSession: MockURLSession!
     let endpoint = URL(string: "https://raw.githubusercontent.com/cmmobile/NasaDataSet/main/apod.json")!
     
     var respone = [Response]()
     var fakeRespone = [Response]()
     
-    let service = ServiceHelper(withBaseURL: "https://raw.githubusercontent.com")
+    //let service = ServiceHelper(withBaseURL: "https://raw.githubusercontent.com")
     
     let fakeData = FakeData()
     
     
     override func setUpWithError() throws {
-        sut = URLSession(configuration: .default)
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDownWithError() throws {
         sut = nil
+        mockSession = nil
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
@@ -48,12 +49,63 @@ class SpaceTravelTests: XCTestCase {
 
 extension SpaceTravelTests {
     
+    private func loadJsonData(file: String) -> Data? {
+        //1
+        if let jsonFilePath = Bundle(for: type(of:  self)).path(forResource: file, ofType: "json") {
+            let jsonFileURL = URL(fileURLWithPath: jsonFilePath)
+            //2
+            if let jsonData = try? Data(contentsOf: jsonFileURL) {
+                return jsonData
+            }
+        }
+        //3
+        return nil
+    }
+   
+    private func createMockSession(fromJsonFile file: String,
+                            andStatusCode code: Int,
+                            andError error: Error?) -> MockURLSession? {
+
+        let data = loadJsonData(file: file)
+        let response = HTTPURLResponse(url: URL(string: "TestUrl")!, statusCode: code, httpVersion: nil, headerFields: nil)
+        return MockURLSession(completionHandler: (data, response, error))
+    }
+}
+
+extension SpaceTravelTests {
+    
+    func testNetworkClient_successResult() {
+        mockSession = createMockSession(fromJsonFile: "nasa",
+    andStatusCode: 200, andError: nil)
+        sut = ServiceHelper(withSession: mockSession)
+        
+        sut.getFeed(fromRoute: Routes.dataSet, parameters: nil) { (result) in
+            
+            switch result {
+                case .success(let feedResult):
+                    XCTAssertNotNil(feedResult)
+                    XCTAssertTrue(feedResult.count == 5178)
+                    let respone = feedResult.first!
+                    XCTAssertTrue(respone.title == "A Year of Extraterrestrial Fountains and Flows")
+                case .failure( _):
+                    XCTFail("Fail")
+                    break
+            }
+        }
+        
+    }
+   
     func testListCount() {
+        
+        mockSession = createMockSession(fromJsonFile: "nasa",
+    andStatusCode: 200, andError: nil)
+        sut = ServiceHelper(withSession: mockSession)
+        
         let exception = XCTestExpectation()
         
         let fakeRespone = fakeData.getDataRespone()
         
-        service.getFeed(fromRoute: Routes.dataSet, parameters: nil) { [weak self] (result) in
+        sut.getFeed(fromRoute: Routes.dataSet, parameters: nil) { [weak self] (result) in
             
             switch result {
                 case .success(let feedResult):
@@ -69,37 +121,6 @@ extension SpaceTravelTests {
             
         XCTAssert(respone.count == 5178, "API Parse Error")
         XCTAssertEqual(fakeRespone, self.respone)
-    }
-    
-    func testValidCallGetsHTTPStatusCode200() {
-            let url =
-                URL(string: "https://raw.githubusercontent.com/cmmobile/NasaDataSet/main/apod.json")!
-            let promise = expectation(description: "Status code: 200")
-            var sc: Int?
-            var responseError: Error?
-            
-            // when
-            let dataTask = sut.dataTask(with: url) { data, response, error in
-                // then
-                if let error = error {
-                  responseError = error
-                  XCTFail("Error: \(error.localizedDescription)")
-                  return
-                } else if let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                    sc = (response as? HTTPURLResponse)?.statusCode
-                  if statusCode == 200 {
-                    // 2
-                    promise.fulfill()
-                  } else {
-                    XCTFail("Status code: \(statusCode)")
-                  }
-                }
-              }
-              dataTask.resume()
-              // 3
-            wait(for: [promise], timeout: 10)
-            XCTAssertNil(responseError)
-            XCTAssertEqual(sc, 200)
     }
     
     func testDecoding() throws {
