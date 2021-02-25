@@ -15,7 +15,6 @@ class PhotoListViewModel: NSObject {
     
     // MARK:- property
     var firstLoad = true
-    
     var respone: Observable<[Response]?> = Observable([])
     
     @available(iOS 13.0, *)
@@ -29,11 +28,15 @@ class PhotoListViewModel: NSObject {
 // MARK: - Public
 extension PhotoListViewModel {
     func configureCollectionView(Add to: UIView) {
-        
+       
         to.backgroundColor = .systemBackground
         
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let flowLayout = UICollectionViewFlowLayout()
+        
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        
         collectionView.delegate = self
+        collectionView.contentInsetAdjustmentBehavior = .always
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         makeDateSourceForCollectionView()
@@ -49,7 +52,6 @@ extension PhotoListViewModel {
             collectionView.bottomAnchor.constraint(equalTo: to.safeAreaLayoutGuide.bottomAnchor),
             collectionView.topAnchor.constraint(equalTo: to.safeAreaLayoutGuide.topAnchor),
         ])
-        
     }
     
     func makeDateSourceForCollectionView() {
@@ -67,6 +69,14 @@ extension PhotoListViewModel {
         } else {
             collectionView.dataSource = self
         }
+    }
+    
+    func updateCollectionView() {
+        let cellsPerRow = 4
+        guard let collectionView = collectionView, let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        let marginsAndInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right + collectionView.safeAreaInsets.left + collectionView.safeAreaInsets.right + flowLayout.minimumInteritemSpacing * CGFloat(cellsPerRow - 1)
+        let itemWidth = ((collectionView.bounds.size.width - marginsAndInsets) / CGFloat(cellsPerRow)).rounded(.down)
+        flowLayout.itemSize =  CGSize(width: itemWidth, height: itemWidth)
     }
 }
 
@@ -166,19 +176,37 @@ extension PhotoListViewModel: UICollectionViewDelegate {
         }
     }
 }
+
 // MARK: - UICollectionViewDelegateFlowLayout
 extension PhotoListViewModel: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+        
+       /* let noOfCellsInRow = 4
+        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+        let totalSpace = flowLayout.sectionInset.left
+            + flowLayout.sectionInset.right
+            + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
+
+        let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
+        return CGSize(width: size, height: 100)*/
+        
+        let cellsPerRow = 4
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return CGSize(width: 0, height: 0) }
+        let marginsAndInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right + collectionView.safeAreaInsets.left + collectionView.safeAreaInsets.right + flowLayout.minimumInteritemSpacing * CGFloat(cellsPerRow - 1)
+        let itemWidth = ((collectionView.bounds.size.width - marginsAndInsets) / CGFloat(cellsPerRow)).rounded(.down)
+        return CGSize(width: itemWidth, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) //.zero
+        return UIEdgeInsets(top: 0,
+                            left: 0,
+                            bottom: 0,
+                            right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView,

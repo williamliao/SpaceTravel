@@ -50,7 +50,7 @@ class ServiceHelper: NSObject, APIClient {
             completion(.failure(errorTemp))
             return
         }
-            
+       
         fetch(with: clientURLRequest(url: url, method: .get) as URLRequest, decode: { json -> [Response]? in
                guard let feedResult = json as? [Response] else { return  nil }
                return feedResult

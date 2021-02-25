@@ -18,6 +18,11 @@ class PhotoListViewController: UIViewController {
         render()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        viewModel.updateCollectionView()
+    }
+    
     func render() {
         
         viewModel.configureCollectionView(Add: view)

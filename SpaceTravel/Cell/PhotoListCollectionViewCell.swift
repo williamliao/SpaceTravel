@@ -64,7 +64,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
             thumbnailImageView.heightAnchor.constraint(equalToConstant: 100),
             
             titleLabel.leadingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: 5),
-            titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.trailingAnchor, constant: -5),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
             titleLabel.topAnchor.constraint(equalTo: thumbnailImageView.topAnchor, constant: 5),
             titleLabel.bottomAnchor.constraint(equalTo: thumbnailImageView.bottomAnchor, constant: -5),
             

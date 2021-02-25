@@ -81,12 +81,7 @@ extension MainViewModel {
 // MARK: - Public
 extension MainViewModel {
     @objc func fetchData() {
-        
-//        if (self.respone.value?.count ?? 0 > 0) {
-//            self.pushToPhotoView(respone: self.respone.value!)
-//            return
-//        }
-        
+
         self.isLoading.value = true
         
         self.service.getFeed(fromRoute: Routes.dataSet, parameters: nil) { [weak self] (result) in
