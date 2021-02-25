@@ -82,10 +82,10 @@ extension MainViewModel {
 extension MainViewModel {
     @objc func fetchData() {
         
-        if (self.respone.value?.count ?? 0 > 0) {
-            self.pushToPhotoView(respone: self.respone.value!)
-            return
-        }
+//        if (self.respone.value?.count ?? 0 > 0) {
+//            self.pushToPhotoView(respone: self.respone.value!)
+//            return
+//        }
         
         self.isLoading.value = true
         
