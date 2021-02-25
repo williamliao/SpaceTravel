@@ -83,7 +83,7 @@ extension PhotoListViewModel {
 // MARK: - Private
 extension PhotoListViewModel {
     
-    private func configureCell(collectionView: UICollectionView, respone: Response, indexPath: IndexPath) -> PhotoListCollectionViewCell? {
+    func configureCell(collectionView: UICollectionView, respone: Response, indexPath: IndexPath) -> PhotoListCollectionViewCell? {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoListCollectionViewCell.reuseIdentifier, for: indexPath) as? PhotoListCollectionViewCell
         
         cell?.titleLabel.text = respone.title

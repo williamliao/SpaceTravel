@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C8B9CB6825E76BA600649D47 /* nasa.json in Resources */ = {isa = PBXBuildFile; fileRef = C8B9CB6725E76BA600649D47 /* nasa.json */; };
+		C8B9CB7025E76BC100649D47 /* FakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B9CB6F25E76BC100649D47 /* FakeData.swift */; };
 		C8D183E125E6166F00F2C258 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D183E025E6166F00F2C258 /* AppDelegate.swift */; };
 		C8D183E325E6166F00F2C258 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D183E225E6166F00F2C258 /* SceneDelegate.swift */; };
 		C8D183E525E6166F00F2C258 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D183E425E6166F00F2C258 /* ViewController.swift */; };
@@ -29,7 +31,6 @@
 		C8D1846125E61E7600F2C258 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1846025E61E7600F2C258 /* MainViewModel.swift */; };
 		C8D1846625E61E8200F2C258 /* PhotoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1846525E61E8200F2C258 /* PhotoListViewModel.swift */; };
 		C8D1846B25E61E8F00F2C258 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1846A25E61E8F00F2C258 /* DetailViewModel.swift */; };
-		C8D1847025E61FBD00F2C258 /* nasa.json in Resources */ = {isa = PBXBuildFile; fileRef = C8D1846F25E61FBD00F2C258 /* nasa.json */; };
 		C8D1848B25E62E1F00F2C258 /* PhotoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1848A25E62E1F00F2C258 /* PhotoListCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C8B9CB6725E76BA600649D47 /* nasa.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = nasa.json; sourceTree = "<group>"; };
+		C8B9CB6F25E76BC100649D47 /* FakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeData.swift; sourceTree = "<group>"; };
 		C8D183DD25E6166F00F2C258 /* SpaceTravel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceTravel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8D183E025E6166F00F2C258 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8D183E225E6166F00F2C258 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,7 +82,6 @@
 		C8D1846025E61E7600F2C258 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		C8D1846525E61E8200F2C258 /* PhotoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewModel.swift; sourceTree = "<group>"; };
 		C8D1846A25E61E8F00F2C258 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
-		C8D1846F25E61FBD00F2C258 /* nasa.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = nasa.json; sourceTree = "<group>"; };
 		C8D1848A25E62E1F00F2C258 /* PhotoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,7 +144,6 @@
 				C8D183E225E6166F00F2C258 /* SceneDelegate.swift */,
 				C8D183E425E6166F00F2C258 /* ViewController.swift */,
 				C8D183E925E6167300F2C258 /* Assets.xcassets */,
-				C8D1846F25E61FBD00F2C258 /* nasa.json */,
 				C8D183EB25E6167300F2C258 /* LaunchScreen.storyboard */,
 				C8D183EE25E6167300F2C258 /* Info.plist */,
 			);
@@ -153,6 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				C8D183F725E6167300F2C258 /* SpaceTravelTests.swift */,
+				C8B9CB6725E76BA600649D47 /* nasa.json */,
+				C8B9CB6F25E76BC100649D47 /* FakeData.swift */,
 				C8D183F925E6167300F2C258 /* Info.plist */,
 			);
 			path = SpaceTravelTests;
@@ -335,7 +338,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8D1847025E61FBD00F2C258 /* nasa.json in Resources */,
 				C8D183ED25E6167300F2C258 /* LaunchScreen.storyboard in Resources */,
 				C8D183EA25E6167300F2C258 /* Assets.xcassets in Resources */,
 			);
@@ -345,6 +347,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8B9CB6825E76BA600649D47 /* nasa.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8B9CB7025E76BC100649D47 /* FakeData.swift in Sources */,
 				C8D183F825E6167300F2C258 /* SpaceTravelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

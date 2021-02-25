@@ -136,7 +136,7 @@ extension DetailViewModel {
     
     func configureView(respone: Response) {
         
-        formatDateString(dateString: respone.date)
+        dateLabel.text = formatDateString(dateString: respone.date)
         titleLabel.text = respone.title
         copyRightLabel.text = respone.copyright
         descriptionTextView.text = respone.description
@@ -183,11 +183,11 @@ extension DetailViewModel {
 // MARK: - Private
 extension DetailViewModel {
     
-    private func formatDateString(dateString: String) {
+    func formatDateString(dateString: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         guard let date = formatter.date(from: dateString) else {
-            return
+            return ""
         }
 
         formatter.dateFormat = "yyyy"
@@ -197,7 +197,7 @@ extension DetailViewModel {
         formatter.dateFormat = "dd"
         let day = formatter.string(from: date)
         
-        dateLabel.text = "\(year) \(month). \(day)"
+        return "\(year) \(month). \(day)"
     }
     
     private func showImage(image: UIImage?) {
