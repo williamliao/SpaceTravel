@@ -94,7 +94,79 @@ extension SpaceTravelTests {
         }
         
     }
-   
+    
+    func testNetworkClient_404Result() {
+        mockSession = createMockSession(fromJsonFile: "nasa", andStatusCode: 404, andError: nil)
+        sut = ServiceHelper(withSession: mockSession)
+        
+        let exception = XCTestExpectation()
+        var thrownError: ServerError?
+        
+        sut.getFeed(fromRoute: Routes.dataSet, parameters: nil) { (result) in
+            
+            switch result {
+                case .success(_):
+                    break
+                case .failure(let error):
+                    thrownError = error
+            }
+        }
+        
+        let wait = XCTWaiter()
+        _ = wait.wait(for: [exception], timeout: 1)
+        
+        XCTAssertNotNil(thrownError)
+        XCTAssertTrue(thrownError?.localizedDescription == "notFound")
+    }
+    
+    func testNetworkClient_NoData() {
+        mockSession = createMockSession(fromJsonFile: "A", andStatusCode: 200, andError: nil)
+        sut = ServiceHelper(withSession: mockSession)
+        
+        let exception = XCTestExpectation()
+        var thrownError: ServerError?
+        
+        sut.getFeed(fromRoute: Routes.dataSet, parameters: nil) { (result) in
+            
+            switch result {
+                case .success(_):
+                    break
+                case .failure(let error):
+                    thrownError = error
+            }
+        }
+        
+        let wait = XCTWaiter()
+        _ = wait.wait(for: [exception], timeout: 1)
+        
+        XCTAssertNotNil(thrownError)
+        XCTAssertTrue(thrownError?.localizedDescription == "badData")
+    }
+    
+    func testNetworkClient_UnExpectStatusCode() {
+        mockSession = createMockSession(fromJsonFile: "nasa", andStatusCode: 500, andError: nil)
+        sut = ServiceHelper(withSession: mockSession)
+        
+        let exception = XCTestExpectation()
+        var thrownError: ServerError?
+        
+        sut.getFeed(fromRoute: Routes.dataSet, parameters: nil) { (result) in
+            
+            switch result {
+                case .success(_):
+                    break
+                case .failure(let error):
+                    thrownError = error
+            }
+        }
+        
+        let wait = XCTWaiter()
+        _ = wait.wait(for: [exception], timeout: 1)
+        
+        XCTAssertNotNil(thrownError)
+        XCTAssertTrue(thrownError?.localizedDescription == "statusCodeError:500")
+    }
+    
     func testListCount() {
         
         mockSession = createMockSession(fromJsonFile: "nasa",

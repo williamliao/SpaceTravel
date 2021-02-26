@@ -16,48 +16,46 @@ public enum RequestType: String {
     case get = "GET", post = "POST", put = "PUT", delete = "DELETE"
 }
 
-enum ServerError: Int, Error {
-    case unknownError
-    case connectionError
-    case invalidCredentials
-    case invalidRequest
-    case notFound = 404
-    case invalidResponse
+enum ServerError: Swift.Error {
+    case unknownError(Error)
+    case statusCodeError(Int)
+    case badRequest
+    case forbidden
+    case notFound
+    case methodNotAllowed
+    case timeOut
     case serverError
     case serverUnavailable
-    case timeOut
-    case unsuppotedURL
     case jsonDecodeFailed
     case badURL
-}
-
-extension ServerError: LocalizedError {
-    public var errorDescription: String? {
+    case badData
+    
+    var localizedDescription: String {
         switch self {
-        case .unknownError:
-            return NSLocalizedString("unknownError", comment: "")
-        case .connectionError:
-            return NSLocalizedString("connectionError", comment: "")
-        case .invalidCredentials:
-            return NSLocalizedString("invalidCredentials", comment: "")
-        case .invalidRequest:
-            return NSLocalizedString("invalidRequest", comment: "")
+        case .unknownError(let error):
+            return NSLocalizedString(error.localizedDescription, comment: "")
         case .notFound:
             return NSLocalizedString("notFound", comment: "")
-        case .invalidResponse:
-            return NSLocalizedString("invalidResponse", comment: "")
         case .serverError:
             return NSLocalizedString("serverError", comment: "")
         case .serverUnavailable:
             return NSLocalizedString("serverUnavailable", comment: "")
         case .timeOut:
             return NSLocalizedString("timeOut", comment: "")
-        case .unsuppotedURL:
-            return NSLocalizedString("unsuppotedURL", comment: "")
         case .jsonDecodeFailed:
             return NSLocalizedString("jsonDecodeFailed", comment: "")
         case .badURL:
             return NSLocalizedString("Bad Url", comment: "")
+        case .badRequest:
+            return NSLocalizedString("badRequest", comment: "")
+        case .methodNotAllowed:
+            return NSLocalizedString("methodNotAllowed", comment: "")
+        case .forbidden:
+            return NSLocalizedString("forbidden", comment: "")
+        case .badData:
+            return NSLocalizedString("badData", comment: "")
+        case .statusCodeError(let code):
+            return NSLocalizedString("statusCodeError:\(code)", comment: "")
         }
     }
 }
@@ -81,12 +79,13 @@ class NetworkClient {
                 let errorString = (error! as NSError).userInfo["NSLocalizedDescription"]
                // let code = (error! as NSError).code
                 print("Error: \(String(describing: errorString))")
-                completion(nil, ServerError.unknownError)
+                completion(nil, ServerError.unknownError(error!))
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse else {
-                completion(nil, ServerError.unknownError)
+                let error = NSError(domain:"", code:999, userInfo:["NSLocalizedDescription": "no httpResponse"])
+                completion(nil, ServerError.unknownError(error))
                 return
             }
             
@@ -99,21 +98,24 @@ class NetworkClient {
                         completion(nil, ServerError.jsonDecodeFailed)
                     }
                 } else {
-                    completion(nil, ServerError.serverError)
+                    completion(nil, ServerError.badData)
                 }
             } else {
-                print("statusCode \(httpResponse.statusCode)")
                 
-                
+                switch httpResponse.statusCode {
+                case 404:
+                    completion(nil, ServerError.notFound)
+                default:
+                    completion(nil, ServerError.statusCodeError(httpResponse.statusCode))
+                    break
+                }
             }
-            
-            
         }
         return task
     }
 
     func fetch<T: Decodable>(with request: URLRequest, decode: @escaping (Decodable) -> T?, completion: @escaping (APIResult<T, ServerError>) -> Void) {
-       
+        
         let task = decodingTask(with: request, decodingType: T.self) { (json , error) in
             
             //MARK: change to main queue

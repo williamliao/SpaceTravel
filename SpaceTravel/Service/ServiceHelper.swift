@@ -13,6 +13,7 @@ public struct Route {
 
 public struct Routes {
     static let dataSet = Route(endpoint: "/cmmobile/NasaDataSet/main/apod.json")
+    static let badUrl = Route(endpoint: "/cmmobile")
 }
 
 class ServiceHelper: NetworkClient {
